@@ -1,0 +1,13 @@
+{
+  "name": "team-service-info",
+  "version": "1.0.0",
+  "description": "Simple Node.js app",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.11"
+  }
+}
