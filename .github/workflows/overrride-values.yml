@@ -55,6 +55,12 @@ jobs:
           
           # Verify Docker
           sudo docker --version
+
+          # Pull the latest image from Docker Hub
+           ## Stop and remove existing container if running
+             sudo docker rm -f $(docker ps -aq) || true
+
+            ## Now pull and run the new container
            sudo docker run -d \
            --name team-info-service \
            --restart unless-stopped \
