@@ -59,8 +59,10 @@ jobs:
           # Pull the latest image from Docker Hub
            ## Stop and remove existing container if running
              sudo docker rm -f $(docker ps -aq) || true
-
+             
             ## Now pull and run the new container
+
+           sudo docker pull 0x1luffy/himanshu-sir-learning:latest
            sudo docker run -d \
            --name team-info-service \
            --restart unless-stopped \
