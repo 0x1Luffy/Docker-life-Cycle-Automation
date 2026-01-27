@@ -21,7 +21,7 @@ jobs:
 
       - name: Build the image and push # Build the image and send to ducker hub
         run: |
-          docker build -f Dockerfiles/dockerfile -t 0x1luffy/himanshu-sir-service-app:latest .
+          docker build -f Dockerfiles/dockerfile -t 0x1luffy/himanshu-sir-learning:latest .
           docker push 0x1luffy/himanshu-sir-learning:latest
 
       - name: Setup SSH
