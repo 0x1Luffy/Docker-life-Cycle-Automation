@@ -43,7 +43,7 @@ jobs:
           sudo usermod -aG docker $USER
           
           # Verify Docker
-          docker --version
-          docker run hello-world
+          sudo docker --version
+          sudo docker run hello-world
           
           EOF
