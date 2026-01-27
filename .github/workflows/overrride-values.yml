@@ -44,13 +44,10 @@ jobs:
           
           # Verify Docker
           sudo docker --version
-          EOF
-
-      - name: Pull and run Docker container (Service-app)
-        run: |
-          sudo docker run -d \
+           sudo docker run -d \
            --name team-info-service \
            --restart unless-stopped \
            -p 80:3000 \
            0x1luffy/himanshu-sir-learning:v1
-           docker ps -a
+
+          EOF
