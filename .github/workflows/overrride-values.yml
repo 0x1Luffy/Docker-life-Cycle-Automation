@@ -1,0 +1,26 @@
+name: Deploy app to EC2
+
+on:
+    push:
+        branches:
+        - master
+
+jobs:                                       # -------> This is were we create like we make multiple jobs like checkout code, test code, deploy code etc.
+    deploy:                                 # -------> This is the first job named deploy.
+        runs-on: ubuntu-latest
+        
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup SSH
+              run: |
+                mkdir -p ~/.ssh
+                echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key.pem
+                chmod 600 ~/.ssh/ec2_key.pem
+                ssh keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+            - name: SSH Into the Server
+              run: |
+                ssh -o StrictHostKeyChecking=no -i ~/.ssh/ec2_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+                
