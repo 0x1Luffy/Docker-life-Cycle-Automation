@@ -1,13 +1,13 @@
 ## Installer Stage
-FROM node:22-alpine AS Installer
+FROM node:22-alpine AS installer
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
 ## Deployment Stage
 
-FROM node:22-alpine AS Builder
-COPY --from=Installer /app/node_modules ./node_modules
+FROM node:22-alpine AS builder
+COPY --from=installer /app/node_modules ./node_modules
 COPY . .
 EXPOSE 3000
 CMD [ "node", "app.js" ]
