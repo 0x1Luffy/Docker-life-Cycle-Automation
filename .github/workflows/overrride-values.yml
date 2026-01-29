@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  deploy:
+  Build_And_deploy:
     runs-on: ubuntu-latest
     
     steps:
@@ -23,6 +23,11 @@ jobs:
         run: |
           docker build -f Dockerfiles/dockerfile -t 0x1luffy/himanshu-sir-learning:latest .
           docker push 0x1luffy/himanshu-sir-learning:latest
+
+  Pull_And_Run_On_EC2:
+    needs: Build_And_deploy
+    runs-on: ubuntu-latest
+    steps:
 
       - name: Setup SSH
         run: |
@@ -69,4 +74,17 @@ jobs:
            -p 80:3000 \
            0x1luffy/himanshu-sir-learning:latest
 
-          EOF
+          EOF      
+
+
+
+
+
+
+
+
+
+
+
+      
+
