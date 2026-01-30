@@ -64,7 +64,7 @@ jobs:
 
           # Pull the latest image from Docker Hub
            ## Stop and remove existing container if running
-             sudo docker rm -f $(docker ps -aq) || true
+             sudo docker ps -aq | xargs -r sudo docker rm -f
              
             ## Now pull and run the new container
            IMAGE_TAG=${GITHUB_SHA::7}
