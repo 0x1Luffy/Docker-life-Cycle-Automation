@@ -3,7 +3,7 @@ name: Deploy app to EC2
 on:
   push:
     branches:
-      - master
+      - Fix/Docker-Automation
 
 jobs:
   Build_And_deploy:
