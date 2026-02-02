@@ -67,7 +67,7 @@ jobs:
              sudo docker ps -aq | xargs -r sudo docker rm -f
              
             ## Now pull and run the new container
-           IMAGE_TAG=${GITHUB_SHA::7}
+           IMAGE_TAG=$(echo "$GITHUB_SHA" | cut -c1-7)
            sudo docker pull 0x1luffy/himanshu-sir-learning:$IMAGE_TAG
            sudo docker run -d \
            --name team-info-service \
