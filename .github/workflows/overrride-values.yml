@@ -24,6 +24,9 @@ jobs:
           IMAGE_TAG=${GITHUB_SHA::7}
           docker build -f Dockerfiles/dockerfile -t 0x1luffy/himanshu-sir-learning:$IMAGE_TAG .
           docker push 0x1luffy/himanshu-sir-learning:$IMAGE_TAG
+          echo ${GITHUB_SHA::7} > image-tag.txt
+          scp image-tag.txt ubuntu@3.108.61.170:/tmp/
+
 
   Pull_And_Run_On_EC2:
     needs: Build_And_deploy
@@ -67,7 +70,7 @@ jobs:
              sudo docker ps -aq | xargs -r sudo docker rm -f
              
             ## Now pull and run the new container
-           IMAGE_TAG=$(echo "$GITHUB_SHA" | cut -c1-7)
+           IMAGE_TAG=$(cat /tmp/image-tag.txt)
            sudo docker pull 0x1luffy/himanshu-sir-learning:$IMAGE_TAG
            sudo docker run -d \
            --name team-info-service \
