@@ -34,7 +34,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           source: "image-tag.txt"
-          target: "/tmp/image-tag.txt"
+          target: "/tmp/"
+          strip_components: 0
           overwrite: true
 
 
