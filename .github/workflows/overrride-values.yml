@@ -25,6 +25,11 @@ jobs:
           docker build -f Dockerfiles/dockerfile -t 0x1luffy/himanshu-sir-learning:$IMAGE_TAG .
           docker push 0x1luffy/himanshu-sir-learning:$IMAGE_TAG
           echo ${GITHUB_SHA::7} > image-tag.txt
+          # SSH into EC2 to save the tag into the file.
+           mkdir -p ~/.ssh
+            echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key.pem
+            chmod 600 ~/.ssh/ec2_key.pem
+            ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
           scp -o StrictHostKeyChecking=no image-tag.txt ubuntu@${{ secrets.EC2_HOST }}:/tmp/
 
 
