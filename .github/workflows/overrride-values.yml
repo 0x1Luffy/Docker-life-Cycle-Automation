@@ -25,7 +25,10 @@ jobs:
           docker build -f Dockerfiles/dockerfile -t 0x1luffy/himanshu-sir-learning:$IMAGE_TAG .
           docker push 0x1luffy/himanshu-sir-learning:$IMAGE_TAG
           echo ${GITHUB_SHA::7} > image-tag.txt
-          scp image-tag.txt ubuntu@3.108.61.170:/tmp/
+          scp -o StrictHostKeyChecking=no \
+          image-tag.txt \
+           ubuntu@3.108.61.170/:/tmp/
+
 
 
   Pull_And_Run_On_EC2:
