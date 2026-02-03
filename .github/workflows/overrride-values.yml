@@ -18,20 +18,24 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build the image and push # Build the image and send to ducker hub
+          
+      - name:  Build and push image
         run: |
           IMAGE_TAG=${GITHUB_SHA::7}
           docker build -f Dockerfiles/dockerfile -t 0x1luffy/himanshu-sir-learning:$IMAGE_TAG .
           docker push 0x1luffy/himanshu-sir-learning:$IMAGE_TAG
-          echo ${GITHUB_SHA::7} > image-tag.txt
-          # SSH into EC2 to save the tag into the file.
-           mkdir -p ~/.ssh
-            echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2_key.pem
-            chmod 600 ~/.ssh/ec2_key.pem
-            ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-          scp -o StrictHostKeyChecking=no image-tag.txt ubuntu@${{ secrets.EC2_HOST }}:/tmp/
+          echo $IMAGE_TAG > image-tag.txt
 
+      - name: Save tag on EC2
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          source: "image-tag.txt"
+          target: "/tmp/image-tag.txt"
+          overwrite: true
 
 
   Pull_And_Run_On_EC2:
